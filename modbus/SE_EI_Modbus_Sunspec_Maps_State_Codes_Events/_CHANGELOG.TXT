@@ -1,0 +1,54 @@
+Version 1.0.0-0
+ - initial version (Feb 2020)
+
+Version 1.1.0-0
+ - introduced _INFO.TXT containing the version of this archive
+ - added _CHANGELOG.TXT to show changes over versions
+ - added IG String Control register-map to archive
+ - added IG Sensor Card register-map to archive
+ - Inverter register-maps: added comments on register "SN" in the CommonBlock Model
+ - Inverter register-maps: mark registers StorAval, StorAval_SF, InBatV and InBatV_SF as not supported
+
+Version 1.1.1-0
+ - added comment "may be imprecise" to inverter register
+   "AC Lifetime Energy production" in all inverter model tables
+
+Version 1.1.2-1
+ - minor fixes in Inverter register-maps 
+   - Immediate Controls Model (I123):
+     - added range for Register OutPFSet in column "Range of values"
+     - corrected column "Range of values" for register "WMaxLimPct_SF"
+   - Inverter Controls Extended Measurements and Status (I122):
+     - corrected columns RW and Function codes of register "Tms" to read-only
+   - Basic Settings Model (I121):
+     - corrected columns RW and Function codes of register "VRef" to read-only
+     - corrected column "Scale Factors" of registers WMax and VRef
+     - corrected column "Range of values" for registers "WMax_SF", "VMinMax_SF" and "VAMax_SF"
+     - corrected formating issues
+
+Version 1.1.3-2
+ - minor fixes in Sensor-Card register-map
+   - corrected description of model ID registers
+ - minor fixes in Inverter register-maps
+   - Basic Storage Controls Model (I124):
+     - added range for Registers InWRte OutWRte in column "Range of values"
+     - added note for invalid power windows Registers InWRte OutWRte in column "Range of values"
+     - added note for Register ChaSt enumeration value TESTING in column "Range of values"
+ - rename two register map files to mark that they are usable for both settings "Float" and "Int&SF"
+   - renamed file IG_String_Control_Register_Map.xlsx to IG_String_Control_Register_Map_Float_and_Int&SF_v1.0.xlsx
+   - renamed file IG_Sensor_Card_Register_Map.xlsx to IG_Sensor_Card_Register_Map_Float_and_Int&SF_v1.0.xlsx
+ - fix register map file name that contained double underscore
+   - renamed file Inverter_Register_Map_Int&SF_v1.0__with_SYMOHYBRID_MODEL_124.xlsx to Inverter_Register_Map_Int&SF_v1.0_with_SYMOHYBRID_MODEL_124.xlsx
+
+Version 1.1.4-0
+ - Inverter register-maps: mark registers 1_DCWH, 2_DCWH and DCWH_SF as not supported for Fronius Hybrid inverters
+
+Version 1.1.5-0
+ - IG Sensor Card register-map:
+   - The second TmpBOM register in model 303 (40080) is not-supported
+   - The TmpAmb register in model 307 (40083) is mapped to Temperature Sensor 2
+
+Version 1.1.5-1
+ - minor fixes in Sensor-Card register-map
+   - corrected description of Immediate Controls Model (I123) data-point VArWMaxPct
+

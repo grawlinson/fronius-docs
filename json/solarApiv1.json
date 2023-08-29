@@ -1,0 +1,2574 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SolarAPIv1",
+    "version": "1.0.1"
+  },
+  "paths": {
+    "/solar_api/v1/GetInverterRealtimeData.cgi": {
+      "get": {
+        "tags": [
+          "Inverter"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CommonInverterData",
+                "3PInverterData",
+                "CumulationInverterData"
+              ]
+            },
+            "name": "Datacollection",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Inverter Realtime Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_InverterData_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetInverterInfo.cgi": {
+      "get": {
+        "tags": [
+          "Inverter"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Inverter Info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_InverterInfo_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetPowerFlowRealtimeData.fcgi": {
+      "get": {
+        "tags": [
+          "Inverter"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return powerflow realtime data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_PowerflowRealtimeData_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetActiveDeviceInfo.cgi": {
+      "get": {
+        "tags": [
+          "External Devices"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return currently active external devices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_ActiveDeviceInfo_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetMeterRealtimeData.cgi": {
+      "get": {
+        "tags": [
+          "External Devices"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Device",
+                "System"
+              ],
+              "default": "System"
+            },
+            "name": "Scope",
+            "required": false
+          },
+          {
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "name": "DeviceId",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Meter Realtime Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_MeterRealtimeData_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetOhmpilotRealtimeData.cgi": {
+      "get": {
+        "tags": [
+          "External Devices"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Device",
+                "System"
+              ],
+              "default": "System"
+            },
+            "name": "Scope",
+            "required": false
+          },
+          {
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "name": "DeviceId",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Ohmpilot Realtime Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_OhmpilotRealtimeData_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solar_api/v1/GetStorageRealtimeData.cgi": {
+      "get": {
+        "tags": [
+          "External Devices"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Device",
+                "System"
+              ],
+              "default": "System"
+            },
+            "name": "Scope",
+            "required": false
+          },
+          {
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "name": "DeviceId",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return Storage Realtime Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/T_StorageRealtimeData_FullStruct"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "T_InverterData_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_InverterDataSelector"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "RequestArguments": {
+                "type": "object",
+                "properties": {
+                  "Datacollection": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_InverterDataSelector": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/T_3PInverterData"
+          },
+          {
+            "$ref": "#/components/schemas/T_CommonInverterData"
+          },
+          {
+            "$ref": "#/components/schemas/T_CommonInverterData_NotRunning"
+          },
+          {
+            "$ref": "#/components/schemas/T_CumulationInverterData"
+          }
+        ]
+      },
+      "T_MeterSelector": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/T_IME1Phase"
+          },
+          {
+            "$ref": "#/components/schemas/T_IME3Phase"
+          },
+          {
+            "$ref": "#/components/schemas/T_CCS"
+          },
+          {
+            "$ref": "#/components/schemas/T_Gavacci1Phase"
+          },
+          {
+            "$ref": "#/components/schemas/T_Gavacci3Phase"
+          },
+          {
+            "$ref": "#/components/schemas/T_Generic"
+          }
+        ]
+      },
+      "T_3PInverterData": {
+        "type": "object",
+        "properties": {
+          "IAC_L1": {
+            "$ref": "#/components/schemas/T_IAC_L1"
+          },
+          "IAC_L2": {
+            "$ref": "#/components/schemas/T_IAC_L2"
+          },
+          "IAC_L3": {
+            "$ref": "#/components/schemas/T_IAC_L3"
+          },
+          "T_AMBIENT": {
+            "$ref": "#/components/schemas/T_T_AMBIENT"
+          },
+          "UAC_L1": {
+            "$ref": "#/components/schemas/T_UAC_L1"
+          },
+          "UAC_L2": {
+            "$ref": "#/components/schemas/T_UAC_L2"
+          },
+          "UAC_L3": {
+            "$ref": "#/components/schemas/T_UAC_L3"
+          }
+        },
+        "required": [
+          "IAC_L1",
+          "IAC_L2",
+          "IAC_L3",
+          "T_AMBIENT",
+          "UAC_L1",
+          "UAC_L2",
+          "UAC_L3"
+        ]
+      },
+      "T_IAC_L1": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IAC_L2": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IAC_L3": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_T_AMBIENT": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UAC_L1": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UAC_L2": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UAC_L3": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_CommonInverterData": {
+        "type": "object",
+        "properties": {
+          "DAY_ENERGY": {
+            "$ref": "#/components/schemas/T_DAY_ENERGY"
+          },
+          "DeviceStatus": {
+            "$ref": "#/components/schemas/T_DeviceStatus"
+          },
+          "FAC": {
+            "$ref": "#/components/schemas/T_FAC"
+          },
+          "IAC": {
+            "$ref": "#/components/schemas/T_IAC"
+          },
+          "IDC": {
+            "$ref": "#/components/schemas/T_IDC"
+          },
+          "IDC_2": {
+            "$ref": "#/components/schemas/T_IDC_2"
+          },
+          "IDC_3": {
+            "$ref": "#/components/schemas/T_IDC_3"
+          },
+          "PAC": {
+            "$ref": "#/components/schemas/T_PAC"
+          },
+          "SAC": {
+            "$ref": "#/components/schemas/T_SAC"
+          },
+          "TOTAL_ENERGY": {
+            "$ref": "#/components/schemas/T_TOTAL_ENERGY"
+          },
+          "UAC": {
+            "$ref": "#/components/schemas/T_UAC"
+          },
+          "UDC": {
+            "$ref": "#/components/schemas/T_UDC"
+          },
+          "UDC_2": {
+            "$ref": "#/components/schemas/T_UDC_2"
+          },
+          "UDC_3": {
+            "$ref": "#/components/schemas/T_UDC_3"
+          },
+          "YEAR_ENERGY": {
+            "$ref": "#/components/schemas/T_YEAR_ENERGY"
+          }
+        },
+        "required": [
+          "DAY_ENERGY",
+          "DeviceStatus",
+          "FAC",
+          "IAC",
+          "IDC",
+          "IDC_2",
+          "IDC_3",
+          "PAC",
+          "SAC",
+          "TOTAL_ENERGY",
+          "UAC",
+          "UDC",
+          "UDC_2",
+          "UDC_3",
+          "YEAR_ENERGY"
+        ]
+      },
+      "T_DAY_ENERGY": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_DeviceStatus": {
+        "type": "object",
+        "properties": {
+          "ErrorCode": {
+            "type": "number"
+          },
+          "InverterState": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "ErrorCode",
+          "InverterState",
+          "StatusCode"
+        ]
+      },
+      "T_FAC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IAC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IDC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IDC_2": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_IDC_3": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_PAC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_SAC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_TOTAL_ENERGY": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UAC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UDC": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UDC_2": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_UDC_3": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_YEAR_ENERGY": {
+        "type": "object",
+        "properties": {
+          "Unit": {
+            "type": "string"
+          },
+          "Value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Unit",
+          "Value"
+        ]
+      },
+      "T_CommonInverterData_NotRunning": {
+        "type": "object",
+        "properties": {
+          "DAY_ENERGY": {
+            "$ref": "#/components/schemas/T_DAY_ENERGY"
+          },
+          "DeviceStatus": {
+            "$ref": "#/components/schemas/T_DeviceStatus"
+          },
+          "IAC": {
+            "$ref": "#/components/schemas/T_IAC"
+          },
+          "IDC": {
+            "$ref": "#/components/schemas/T_IDC"
+          },
+          "IDC_2": {
+            "$ref": "#/components/schemas/T_IDC_2"
+          },
+          "IDC_3": {
+            "$ref": "#/components/schemas/T_IDC_3"
+          },
+          "PAC": {
+            "$ref": "#/components/schemas/T_PAC"
+          },
+          "SAC": {
+            "$ref": "#/components/schemas/T_SAC"
+          },
+          "TOTAL_ENERGY": {
+            "$ref": "#/components/schemas/T_TOTAL_ENERGY"
+          },
+          "UAC": {
+            "$ref": "#/components/schemas/T_UAC"
+          },
+          "UDC": {
+            "$ref": "#/components/schemas/T_UDC"
+          },
+          "UDC_2": {
+            "$ref": "#/components/schemas/T_UDC_2"
+          },
+          "UDC_3": {
+            "$ref": "#/components/schemas/T_UDC_3"
+          },
+          "YEAR_ENERGY": {
+            "$ref": "#/components/schemas/T_YEAR_ENERGY"
+          }
+        },
+        "required": [
+          "DAY_ENERGY",
+          "DeviceStatus",
+          "IAC",
+          "IDC",
+          "IDC_2",
+          "IDC_3",
+          "PAC",
+          "SAC",
+          "TOTAL_ENERGY",
+          "UAC",
+          "UDC",
+          "UDC_2",
+          "UDC_3",
+          "YEAR_ENERGY"
+        ]
+      },
+      "T_CumulationInverterData": {
+        "type": "object",
+        "properties": {
+          "DAY_ENERGY": {
+            "$ref": "#/components/schemas/T_DAY_ENERGY"
+          },
+          "DeviceStatus": {
+            "$ref": "#/components/schemas/T_DeviceStatus"
+          },
+          "PAC": {
+            "$ref": "#/components/schemas/T_PAC"
+          },
+          "TOTAL_ENERGY": {
+            "$ref": "#/components/schemas/T_TOTAL_ENERGY"
+          },
+          "YEAR_ENERGY": {
+            "$ref": "#/components/schemas/T_YEAR_ENERGY"
+          }
+        },
+        "required": [
+          "DAY_ENERGY",
+          "DeviceStatus",
+          "PAC",
+          "TOTAL_ENERGY",
+          "YEAR_ENERGY"
+        ]
+      },
+      "T_InverterInfo_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_InverterInfo"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_InverterInfo": {
+        "type": "object",
+        "properties": {
+          "1": {
+            "$ref": "#/components/schemas/T_1"
+          }
+        },
+        "required": [
+          "1"
+        ]
+      },
+      "T_1": {
+        "type": "object",
+        "properties": {
+          "CustomName": {
+            "type": "string"
+          },
+          "DT": {
+            "type": "number"
+          },
+          "ErrorCode": {
+            "type": "number"
+          },
+          "PVPower": {
+            "type": "number"
+          },
+          "Show": {
+            "type": "number"
+          },
+          "StatusCode": {
+            "type": "number"
+          },
+          "InverterState": {
+            "type": "string"
+          },
+          "UniqueID": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "CustomName",
+          "DT",
+          "ErrorCode",
+          "InverterState",
+          "PVPower",
+          "Show",
+          "StatusCode",
+          "UniqueID"
+        ]
+      },
+      "T_MeterRealtimeData_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_MeterRealtimeData"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "RequestArguments": {
+                "type": "object",
+                "properties": {
+                  "Scope": {
+                    "type": "string"
+                  },
+                  "DeviceId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_MeterRealtimeData": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_MeterSelector"
+        }
+      },
+      "T_Meter": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          }
+        },
+        "required": [
+          "Details"
+        ]
+      },
+      "T_CCS": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Phase_2": {
+            "type": "number"
+          },
+          "Current_AC_Phase_3": {
+            "type": "number"
+          },
+          "Current_AC_Sum": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_2_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_2_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_3_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_3_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_2": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_3": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_2": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_3": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_2": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_3": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_2": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_3": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_12": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_23": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_31": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_2": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_3": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_Average": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Phase_2",
+          "Current_AC_Phase_3",
+          "Current_AC_Sum",
+          "Details",
+          "Enable",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Phase_1_Consumed",
+          "EnergyReal_WAC_Phase_1_Produced",
+          "EnergyReal_WAC_Phase_2_Consumed",
+          "EnergyReal_WAC_Phase_2_Produced",
+          "EnergyReal_WAC_Phase_3_Consumed",
+          "EnergyReal_WAC_Phase_3_Produced",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Phase_2",
+          "PowerApparent_S_Phase_3",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Phase_2",
+          "PowerFactor_Phase_3",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Phase_2",
+          "PowerReactive_Q_Phase_3",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Phase_2",
+          "PowerReal_P_Phase_3",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_PhaseToPhase_12",
+          "Voltage_AC_PhaseToPhase_23",
+          "Voltage_AC_PhaseToPhase_31",
+          "Voltage_AC_Phase_1",
+          "Voltage_AC_Phase_2",
+          "Voltage_AC_Phase_3",
+          "Voltage_AC_Phase_Average"
+        ]
+      },
+      "T_Gavacci1Phase": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Sum": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_2": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_3": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Sum",
+          "Details",
+          "Enable",
+          "EnergyReactive_VArAC_Sum_Consumed",
+          "EnergyReactive_VArAC_Sum_Produced",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Phase_2",
+          "PowerReal_P_Phase_3",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_Phase_1"
+        ]
+      },
+      "T_Gavacci3Phase": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Phase_2": {
+            "type": "number"
+          },
+          "Current_AC_Phase_3": {
+            "type": "number"
+          },
+          "Current_AC_Sum": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_2": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_3": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_2": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_3": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_2": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_3": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_2": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_3": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_12": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_23": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_31": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_2": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_3": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Phase_2",
+          "Current_AC_Phase_3",
+          "Current_AC_Sum",
+          "Details",
+          "Enable",
+          "EnergyReactive_VArAC_Sum_Consumed",
+          "EnergyReactive_VArAC_Sum_Produced",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Phase_2",
+          "PowerApparent_S_Phase_3",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Phase_2",
+          "PowerFactor_Phase_3",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Phase_2",
+          "PowerReactive_Q_Phase_3",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Phase_2",
+          "PowerReal_P_Phase_3",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_PhaseToPhase_12",
+          "Voltage_AC_PhaseToPhase_23",
+          "Voltage_AC_PhaseToPhase_31",
+          "Voltage_AC_Phase_1",
+          "Voltage_AC_Phase_2",
+          "Voltage_AC_Phase_3"
+        ]
+      },
+      "T_Generic": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Phase_2": {
+            "type": "number"
+          },
+          "Current_AC_Phase_3": {
+            "type": "number"
+          },
+          "Current_AC_Sum": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_2_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_2_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_3_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_3_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_2": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_3": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_2": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_3": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_2": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_3": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_2": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_3": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_12": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_23": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_31": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_2": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_3": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_Average": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Phase_2",
+          "Current_AC_Phase_3",
+          "Current_AC_Sum",
+          "Details",
+          "Enable",
+          "EnergyReactive_VArAC_Phase_1_Consumed",
+          "EnergyReactive_VArAC_Phase_1_Produced",
+          "EnergyReactive_VArAC_Sum_Consumed",
+          "EnergyReactive_VArAC_Sum_Produced",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Phase_1_Consumed",
+          "EnergyReal_WAC_Phase_1_Produced",
+          "EnergyReal_WAC_Phase_2_Consumed",
+          "EnergyReal_WAC_Phase_2_Produced",
+          "EnergyReal_WAC_Phase_3_Consumed",
+          "EnergyReal_WAC_Phase_3_Produced",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Phase_2",
+          "PowerApparent_S_Phase_3",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Phase_2",
+          "PowerFactor_Phase_3",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Phase_2",
+          "PowerReactive_Q_Phase_3",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Phase_2",
+          "PowerReal_P_Phase_3",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_PhaseToPhase_12",
+          "Voltage_AC_PhaseToPhase_23",
+          "Voltage_AC_PhaseToPhase_31",
+          "Voltage_AC_Phase_1",
+          "Voltage_AC_Phase_2",
+          "Voltage_AC_Phase_3",
+          "Voltage_AC_Phase_Average"
+        ]
+      },
+      "T_IME1Phase": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Sum": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Sum",
+          "Details",
+          "Enable",
+          "EnergyReactive_VArAC_Phase_1_Consumed",
+          "EnergyReactive_VArAC_Phase_1_Produced",
+          "EnergyReactive_VArAC_Sum_Consumed",
+          "EnergyReactive_VArAC_Sum_Produced",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Phase_1_Consumed",
+          "EnergyReal_WAC_Phase_1_Produced",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_Phase_1"
+        ]
+      },
+      "T_IME3Phase": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details"
+          },
+          "Current_AC_Phase_1": {
+            "type": "number"
+          },
+          "Current_AC_Phase_2": {
+            "type": "number"
+          },
+          "Current_AC_Phase_3": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Produced": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Sum_Produced": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Minus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Plus_Absolute": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Produced": {
+            "type": "number"
+          },
+          "Frequency_Phase_Average": {
+            "type": "number"
+          },
+          "Meter_Location_Current": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_1": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_2": {
+            "type": "number"
+          },
+          "PowerApparent_S_Phase_3": {
+            "type": "number"
+          },
+          "PowerApparent_S_Sum": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_1": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_2": {
+            "type": "number"
+          },
+          "PowerFactor_Phase_3": {
+            "type": "number"
+          },
+          "PowerFactor_Sum": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_1": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_2": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Phase_3": {
+            "type": "number"
+          },
+          "PowerReactive_Q_Sum": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_1": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_2": {
+            "type": "number"
+          },
+          "PowerReal_P_Phase_3": {
+            "type": "number"
+          },
+          "PowerReal_P_Sum": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "number"
+          },
+          "Visible": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_12": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_23": {
+            "type": "number"
+          },
+          "Voltage_AC_PhaseToPhase_31": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_1": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_2": {
+            "type": "number"
+          },
+          "Voltage_AC_Phase_3": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Current_AC_Phase_1",
+          "Current_AC_Phase_2",
+          "Current_AC_Phase_3",
+          "Details",
+          "Enable",
+          "EnergyReactive_VArAC_Phase_1_Consumed",
+          "EnergyReactive_VArAC_Phase_1_Produced",
+          "EnergyReactive_VArAC_Sum_Consumed",
+          "EnergyReactive_VArAC_Sum_Produced",
+          "EnergyReal_WAC_Minus_Absolute",
+          "EnergyReal_WAC_Plus_Absolute",
+          "EnergyReal_WAC_Sum_Consumed",
+          "EnergyReal_WAC_Sum_Produced",
+          "Frequency_Phase_Average",
+          "Meter_Location_Current",
+          "PowerApparent_S_Phase_1",
+          "PowerApparent_S_Phase_2",
+          "PowerApparent_S_Phase_3",
+          "PowerApparent_S_Sum",
+          "PowerFactor_Phase_1",
+          "PowerFactor_Phase_2",
+          "PowerFactor_Phase_3",
+          "PowerFactor_Sum",
+          "PowerReactive_Q_Phase_1",
+          "PowerReactive_Q_Phase_2",
+          "PowerReactive_Q_Phase_3",
+          "PowerReactive_Q_Sum",
+          "PowerReal_P_Phase_1",
+          "PowerReal_P_Phase_2",
+          "PowerReal_P_Phase_3",
+          "PowerReal_P_Sum",
+          "Timestamp",
+          "Visible",
+          "Voltage_AC_PhaseToPhase_12",
+          "Voltage_AC_PhaseToPhase_23",
+          "Voltage_AC_PhaseToPhase_31",
+          "Voltage_AC_Phase_1",
+          "Voltage_AC_Phase_2",
+          "Voltage_AC_Phase_3"
+        ]
+      },
+      "T_Details": {
+        "type": "object",
+        "properties": {
+          "Manufacturer": {
+            "type": "string"
+          },
+          "Serial": {
+            "type": "string"
+          },
+          "Model": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Manufacturer",
+          "Model",
+          "Serial"
+        ]
+      },
+      "T_OhmpilotRealtimeData_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_OhmpilotRealtimeData"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "RequestArguments": {
+                "type": "object",
+                "properties": {
+                  "Scope": {
+                    "type": "string"
+                  },
+                  "DeviceId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_OhmpilotRealtimeData": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_Ohmpilot"
+        }
+      },
+      "T_Ohmpilot": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Details_Ohmpilot"
+          },
+          "CodeOfState": {
+            "type": "number"
+          },
+          "EnergyReal_WAC_Sum_Consumed": {
+            "type": "number"
+          },
+          "PowerReal_PAC_Sum": {
+            "type": "number"
+          },
+          "Temperature_Channel_1": {
+            "type": "number"
+          },
+          "EnergyReactive_VArAC_Phase_1_Produced": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "CodeOfState",
+          "Details",
+          "EnergyReactive_VArAC_Phase_1_Produced",
+          "EnergyReal_WAC_Sum_Consumed",
+          "PowerReal_PAC_Sum",
+          "Temperature_Channel_1"
+        ]
+      },
+      "T_Details_Ohmpilot": {
+        "type": "object",
+        "properties": {
+          "Manufacturer": {
+            "type": "string"
+          },
+          "Serial": {
+            "type": "string"
+          },
+          "Model": {
+            "type": "string"
+          },
+          "Hardware": {
+            "type": "string"
+          },
+          "Software": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Hardware",
+          "Manufacturer",
+          "Model",
+          "Serial",
+          "Software"
+        ]
+      },
+      "T_StorageRealtimeData_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_StorageRealtimeData"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "RequestArguments": {
+                "type": "object",
+                "properties": {
+                  "Scope": {
+                    "type": "string"
+                  },
+                  "DeviceId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_StorageRealtimeData": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_Storage"
+        }
+      },
+      "T_Storage": {
+        "type": "object",
+        "properties": {
+          "Controller": {
+            "$ref": "#/components/schemas/T_Controller"
+          },
+          "Modules":{
+	    "type": "array",
+            "items": {}
+	  }
+        },
+        "required": [
+          "Controller",
+          "Modules"
+        ]
+      },
+      "T_Controller": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/T_Controller_Details"
+          },
+          "Capacity_Maximum": {
+            "type": "number"
+          },
+          "Current_DC": {
+            "type": "number"
+          },
+          "DesignedCapacity": {
+            "type": "number"
+          },
+          "Enable": {
+            "type": "number"
+          },
+          "StateOfCharge_Relative": {
+            "type": "number"
+          },
+          "Status_BatteryCell": {
+            "type": "number"
+          },
+          "Temperature_Cell": {
+            "type": "number"
+          },
+          "TimeStamp": {
+            "type": "number"
+          },
+          "Voltage_DC": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Capacity_Maximum",
+          "Current_DC",
+          "DesignedCapacity",
+          "Details",
+          "Enable",
+          "StateOfCharge_Relative",
+          "Status_BatteryCell",
+          "Temperature_Cell",
+          "TimeStamp",
+          "Voltage_DC"
+        ]
+      },
+      "T_Controller_Details": {
+        "type": "object",
+        "properties": {
+          "Manufacturer": {
+            "type": "string"
+          },
+          "Serial": {
+            "type": "string"
+          },
+          "Model": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Manufacturer",
+          "Model",
+          "Serial"
+        ]
+      },
+      "T_PowerflowRealtimeData_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_PowerFlowRealtimeData"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_PowerFlowRealtimeData": {
+        "type": "object",
+        "properties": {
+          "inverters": {
+            "type": "object",
+            "$ref": "#/components/schemas/T_inverters"
+          }
+        },
+        "required": [
+          "inverters"
+        ]
+      },
+      "T_inverters": {
+        "type": "object",
+        "properties": {
+          "1": {
+            "type": "object",
+            "$ref": "#/components/schemas/T_1_Powerflow"
+          },
+          "Site": {
+            "type": "object",
+            "$ref": "#/components/schemas/T_Site"
+          },
+          "Version":{
+	    "type": "string"
+          }
+        },
+        "required": [
+          "1",
+	  "Site",
+	  "Version"
+        ]
+      },
+      "T_Site": {
+        "type": "object",
+        "properties": {
+          "BackupMode": {
+            "type": "number"
+          },
+          "BatteryStandby": {
+            "type": "string"
+          },
+          "E_Day": {
+            "type": "number"
+          },
+          "E_Year": {
+            "type": "number"
+          },
+          "E_Total": {
+            "type": "number"
+          },
+          "Meter_Location": {
+            "type": "string"
+          },
+          "Mode": {
+            "type": "string"
+          },
+          "P_Akku": {
+            "type": "number"
+          },
+          "P_Grid": {
+            "type": "number"
+          },
+          "P_Load": {
+            "type": "number"
+          },
+          "P_PV": {
+            "type": "number"
+          },
+          "rel_Autonomy": {
+            "type": "number"
+          },
+          "rel_SelfConsumption": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "BackupMode",
+          "BatteryStandby",
+          "E_Day",
+          "E_Total",
+          "E_Year",
+          "Meter_Location",
+          "Mode",
+          "P_Akku",
+          "P_Grid",
+          "P_Load",
+          "P_PV",
+          "rel_Autonomy",
+          "rel_SelfConsumption"
+        ]
+      },
+      "T_1_Powerflow": {
+        "type": "object",
+        "properties": {
+          "Battery_Mode": {
+            "type": "string"
+          },
+          "DT": {
+            "type": "number"
+          },
+          "E_Day": {
+            "type": "number"
+          },
+          "E_Year": {
+            "type": "number"
+          },
+          "E_Total": {
+            "type": "number"
+          },
+          "P": {
+            "type": "number"
+          },
+          "SOC": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "Battery_Mode",
+          "DT",
+          "E_Day",
+          "E_Total",
+          "E_Year",
+          "P",
+          "SOC"
+        ]
+      },
+      "T_ActiveDeviceInfo_FullStruct": {
+        "type": "object",
+        "properties": {
+          "Body": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "$ref": "#/components/schemas/T_Data"
+              }
+            },
+            "required": [
+              "Data"
+            ]
+          },
+          "Head": {
+            "type": "object",
+            "properties": {
+              "Status": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "number"
+                  },
+                  "Reason": {
+                    "type": "string"
+                  },
+                  "UserMessage": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Code"
+                ]
+              },
+              "TimeStamp": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Status",
+              "TimeStamp"
+            ]
+          }
+        },
+        "required": [
+          "Body",
+          "Head"
+        ]
+      },
+      "T_ActiveDeviceInfo_1": {
+        "type": "object",
+        "properties": {
+          "DT": {
+            "type": "number"
+          },
+          "Serial": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DT",
+          "Serial"
+        ]
+      },
+      "T_Data": {
+        "type": "object",
+        "properties": {
+          "Inverter": {
+            "$ref": "#/components/schemas/T_ActiveDeviceInfo_Inverter"
+          },
+          "Meter": {
+            "$ref": "#/components/schemas/T_ActiveDeviceInfo_Meter"
+          },
+          "Storage": {
+            "$ref": "#/components/schemas/T_ActiveDeviceInfo_Storage"
+          },
+          "Ohmpilot": {
+            "$ref": "#/components/schemas/T_ActiveDeviceInfo_Ohmpilot"
+          }
+        },
+        "required": [
+          "Inverter",
+          "Meter",
+          "Ohmpilot",
+          "Storage"
+        ]
+      },
+      "T_ActiveDeviceInfo_Inverter": {
+        "type": "object",
+        "properties": {
+          "1": {
+            "$ref": "#/components/schemas/T_ActiveDeviceInfo_1"
+          }
+        },
+        "required": [
+          "1"
+        ]
+      },
+      "T_ActiveDeviceInfo_Meter": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_Meter_MeterEntry"
+        }
+      },
+      "T_ActiveDeviceInfo_Storage": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_Storage_StorageEntry"
+        }
+      },
+      "T_ActiveDeviceInfo_Ohmpilot": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/T_Ohmpilot_OhmpilotEntry"
+        }
+      },
+      "T_Meter_MeterEntry": {
+        "type": "object",
+        "properties": {
+          "DT": {
+            "type": "number"
+          },
+          "Serial": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DT",
+          "Serial"
+        ]
+      },
+      "T_Storage_StorageEntry": {
+        "type": "object",
+        "properties": {
+          "DT": {
+            "type": "number"
+          },
+          "Serial": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DT",
+          "Serial"
+        ]
+      },
+      "T_Ohmpilot_OhmpilotEntry": {
+        "type": "object",
+        "properties": {
+          "DT": {
+            "type": "number"
+          },
+          "Serial": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "DT",
+          "Serial"
+        ]
+      }
+    }
+  }
+}
+

@@ -1,0 +1,25 @@
+Version 1.0.0-0
+ - initial version
+
+Version 1.1.0-0
+ - added Smart-Meter register maps
+
+Version 1.1.1-0
+ - change Linux LF to Windows CR/LF in file _CHANGELOG.TXT
+
+Version 1.1.2-0
+ - fix typo in description of Basic Storage Control model 124 register InWRte
+
+Version 1.1.3-0
+ - clarify description of Basic Storage Control model 123 register WChaMax
+
+Version 1.1.4-0
+ - add description for inverter model registers EvtVnd1-2
+ - mark inverter model registers EvtVnd3-4 as not supported
+
+Version 1.1.5-0
+ - data-point names of mppt model now contain the complete data-point path
+   eg.: name is now "module/1/ID" instead of "1_ID"
+
+Version 1.1.6-0
+  - update the naming to the actual convention
